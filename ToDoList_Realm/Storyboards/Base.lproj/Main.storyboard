@@ -10,7 +10,7 @@
         <!--Task Lists-->
         <scene sceneID="eNo-Fk-phG">
             <objects>
-                <tableViewController id="ecZ-z3-ZDW" sceneMemberID="viewController">
+                <tableViewController id="ecZ-z3-ZDW" customClass="TaskListViewController" customModule="ToDoList_Realm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="dGC-34-2T1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,6 +22,9 @@
                                 <segment title="Date"/>
                                 <segment title="A-Z"/>
                             </segments>
+                            <connections>
+                                <action selector="sortingList:" destination="ecZ-z3-ZDW" eventType="valueChanged" id="Dfq-FR-6AC"/>
+                            </connections>
                         </segmentedControl>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskList" textLabel="vp3-GK-Vcj" detailTextLabel="7Q8-tZ-RPl" style="IBUITableViewCellStyleValue1" id="Kzg-n7-W0w">
@@ -57,16 +60,22 @@
                             <outlet property="delegate" destination="ecZ-z3-ZDW" id="JTF-Km-Brv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Task Lists" id="Ybf-eF-Mps"/>
+                    <navigationItem key="navigationItem" title="Task Lists" id="Ybf-eF-Mps">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="EeB-i6-I9b">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="ecZ-z3-ZDW" id="OIH-4I-6Ie"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="guy-ma-1jL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="589" y="200"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Tasks Table View Controller-->
         <scene sceneID="QYR-nc-cb4">
             <objects>
-                <tableViewController id="MdT-DV-x9o" sceneMemberID="viewController">
+                <tableViewController id="MdT-DV-x9o" customClass="TasksTableViewController" customModule="ToDoList_Realm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="QQC-R7-bn1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -10,14 +10,14 @@
 import RealmSwift
 
 class TaskList: Object {
-    @Persisted var name = ""
-    @Persisted var date = Date()
+    @objc dynamic var name = ""
+    @objc dynamic var date = Date()
     let tasks = List<Task>()
 }
 
 class Task: Object {
-    @Persisted var name = ""
-    @Persisted var note = ""
-    @Persisted var date = Date()
-    @Persisted var isCompleted = false
+    @objc dynamic var name = ""
+    @objc dynamic var note = ""
+    @objc dynamic var date = Date()
+    @objc dynamic var isCompleted = false
 }
