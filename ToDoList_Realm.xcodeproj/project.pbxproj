@@ -18,6 +18,7 @@
 		2B9741282897FC39000C3373 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9741272897FC39000C3373 /* TaskListViewController.swift */; };
 		2B97412A28980ADC000C3373 /* TasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B97412928980ADC000C3373 /* TasksTableViewController.swift */; };
 		2B97412D289814D4000C3373 /* Extension + UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B97412C289814D4000C3373 /* Extension + UIAlertController.swift */; };
+		2B974130289852DB000C3373 /* Extension + UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B97412F289852DB000C3373 /* Extension + UITableViewCell.swift */; };
 		E59BE1EE1649458D8E2939F6 /* Pods_ToDoList_Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFB8104B8E9ABC3B8FA0EF3 /* Pods_ToDoList_Realm.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		2B9741272897FC39000C3373 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		2B97412928980ADC000C3373 /* TasksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksTableViewController.swift; sourceTree = "<group>"; };
 		2B97412C289814D4000C3373 /* Extension + UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIAlertController.swift"; sourceTree = "<group>"; };
+		2B97412F289852DB000C3373 /* Extension + UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableViewCell.swift"; sourceTree = "<group>"; };
 		A0A836F11F08EBBD4DD4A416 /* Pods-ToDoList_Realm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList_Realm.release.xcconfig"; path = "Target Support Files/Pods-ToDoList_Realm/Pods-ToDoList_Realm.release.xcconfig"; sourceTree = "<group>"; };
 		CEFB8104B8E9ABC3B8FA0EF3 /* Pods_ToDoList_Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoList_Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA09F780AB36EABBA8A8838F /* Pods-ToDoList_Realm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList_Realm.debug.xcconfig"; path = "Target Support Files/Pods-ToDoList_Realm/Pods-ToDoList_Realm.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				2B97412C289814D4000C3373 /* Extension + UIAlertController.swift */,
+				2B97412F289852DB000C3373 /* Extension + UITableViewCell.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				2B9741262897F9B9000C3373 /* StorageManager.swift in Sources */,
 				2B9741082897C77E000C3373 /* AppDelegate.swift in Sources */,
 				2B97410A2897C77E000C3373 /* SceneDelegate.swift in Sources */,
+				2B974130289852DB000C3373 /* Extension + UITableViewCell.swift in Sources */,
 				2B97412A28980ADC000C3373 /* TasksTableViewController.swift in Sources */,
 				2B9741282897FC39000C3373 /* TaskListViewController.swift in Sources */,
 			);

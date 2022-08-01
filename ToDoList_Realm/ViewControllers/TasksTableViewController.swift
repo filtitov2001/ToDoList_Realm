@@ -63,51 +63,61 @@ class TasksTableViewController: UITableViewController {
         showAlert()
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let task = indexPath.section == 0 ? currentTasks[indexPath.row] : completedTasks[indexPath.row]
+        
+        let doneTitle = indexPath.section == 0 ? "Done" : "Undone"
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            StorageManager.shared.delete(task)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        }
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, isDone in
+            self.showAlert(with: task) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            isDone(true)
+        }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        let doneAction = UIContextualAction(style: .normal, title: doneTitle) { _, _, isDone in
+            StorageManager.shared.done(task)
 
+            let indexPathForCurrentTask = IndexPath(row: self.currentTasks.count - 1, section: 0)
+            let indexPathForCompletedTask = IndexPath(row: self.completedTasks.count - 1, section: 1)
+            let destinationIndexRow = indexPath.section == 0 ? indexPathForCompletedTask : indexPathForCurrentTask
+            tableView.moveRow(at: indexPath, to: destinationIndexRow)
+            
+            isDone(true)
+        }
+        
+        
+        editAction.backgroundColor = .orange
+        doneAction.backgroundColor = .systemGreen
+        
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 }
 
 extension TasksTableViewController {
     
-    private func showAlert() {
+    private func showAlert(with task: Task? = nil, completion: (() -> Void)? = nil) {
+        let title = task != nil ? "Edit Task" : "New Task"
         
-        let alert = AlertController.createAlert(withTitle: "New Task", andMessage: "What do you want to do?")
+        let alert = UIAlertController.createAlert(withTitle: title, andMessage: "What do you want to do?")
         
-        alert.action { newValue, note in
-            self.saveTask(withName: newValue, andNote: note)
+        alert.action(with: task) { newValue, note in
+            if let task = task, let completion = completion {
+                StorageManager.shared.rename(task, to: newValue, with: note)
+                completion()
+            } else {
+                self.saveTask(withName: newValue, andNote: note)
+            }
         }
+        
         
         present(alert, animated: true)
     }
@@ -115,7 +125,10 @@ extension TasksTableViewController {
     private func saveTask(withName name: String, andNote note: String) {
         let task = Task(value: [name, note])
         StorageManager.shared.save(task, to: taskList)
+        
         let rowIndex = IndexPath(row: currentTasks.index(of: task) ?? 0, section: 0)
         tableView.insertRows(at: [rowIndex], with: .automatic)
     }
+    
+    
 }

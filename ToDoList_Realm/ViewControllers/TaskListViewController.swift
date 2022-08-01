@@ -19,7 +19,6 @@ class TaskListViewController: UITableViewController {
         createTempData()
         
         tasksLists = StorageManager.shared.realm.objects(TaskList.self)
-        
         navigationItem.leftBarButtonItem = editButtonItem
     }
     
@@ -38,10 +37,7 @@ class TaskListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskList", for: indexPath)
         let taskList = tasksLists[indexPath.row]
         
-        var content = cell.defaultContentConfiguration()
-        content.text = taskList.name
-        content.secondaryText = String(taskList.tasks.count)
-        cell.contentConfiguration = content
+        cell.configure(with: taskList)
 
         return cell
     }
@@ -65,6 +61,7 @@ class TaskListViewController: UITableViewController {
         
         let doneAction = UIContextualAction(style: .normal, title: "Done") { _, _, isDone in
             StorageManager.shared.done(taskList)
+            
             tableView.reloadRows(at: [indexPath], with: .automatic)
             isDone(true)
         }
@@ -81,48 +78,11 @@ class TaskListViewController: UITableViewController {
     }
     
     @IBAction func sortingList(_ sender: UISegmentedControl) {
+        tasksLists = sender.selectedSegmentIndex == 0
+        ? tasksLists.sorted(byKeyPath: "date")
+        : tasksLists.sorted(byKeyPath: "name")
+        tableView.reloadData()
     }
-    
-    private func createTempData() {
-        DataManager.shared.createTempData {
-            self.tableView.reloadData()
-        }
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
@@ -137,7 +97,9 @@ class TaskListViewController: UITableViewController {
 extension TaskListViewController {
     
     private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
-        let alert = AlertController.createAlert(withTitle: "New List", andMessage: "Please insert new value")
+        let title = taskList != nil ? "Edit List" : "New List"
+        
+        let alert = UIAlertController.createAlert(withTitle: title, andMessage: "Please insert new value")
 
         alert.action(with: taskList) { newValue in
             if let taskList = taskList, let completion = completion {
@@ -157,4 +119,11 @@ extension TaskListViewController {
         let rowIndex = IndexPath(row: tasksLists.index(of: taskList) ?? 0, section: 0)
         tableView.insertRows(at: [rowIndex], with: .automatic)
     }
+    
+    private func createTempData() {
+        DataManager.shared.createTempData {
+            self.tableView.reloadData()
+        }
+    }
+    
 }
